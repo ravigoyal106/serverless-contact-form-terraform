@@ -1,6 +1,3 @@
-
-
-Readme · MD
 # Serverless Contact Form (AWS + Terraform)
  
 ## Overview
