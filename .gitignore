@@ -1,0 +1,30 @@
+# Local .terraform directories (provider binaries, cached modules)
+**/.terraform/*
+
+# State files — these must NEVER be committed, they can contain secrets
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Variable files can contain sensitive values — exclude by default,
+# commit only the .example version as a template
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+
+# Override files (local-only overrides, shouldn't be shared)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI config that may contain credentials
+.terraformrc
+terraform.rc
+
+# OS/editor cruft
+.DS_Store
+*.swp
