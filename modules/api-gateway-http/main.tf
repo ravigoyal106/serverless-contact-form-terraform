@@ -28,8 +28,6 @@ resource "aws_apigatewayv2_stage" "default" {
   auto_deploy = true
 }
 
-# The resource-based policy from the section above without this,
-# API Gateway cannot invoke the function, regardless of Lambda's own role.
 resource "aws_lambda_permission" "allow_apigw" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"

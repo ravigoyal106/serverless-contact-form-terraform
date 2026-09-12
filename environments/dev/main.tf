@@ -54,7 +54,7 @@ module "api_gateway" {
   api_name             = "${var.project_name}-api-dev"
   lambda_invoke_arn    = module.contact_form_lambda.invoke_arn
   lambda_function_name = module.contact_form_lambda.function_name
-  cors_allow_origin    = "*" # dev only — see docs/adr/0005
+  cors_allow_origin    = "*"
 }
 
 module "frontend_site" {
@@ -65,6 +65,5 @@ module "frontend_site" {
   index_html_content = templatefile("${path.module}/../../frontend/index.html.tftpl", {
     api_url = "${module.api_gateway.invoke_url}/contact"
   })
-
   tags = { Environment = "dev" }
 }
