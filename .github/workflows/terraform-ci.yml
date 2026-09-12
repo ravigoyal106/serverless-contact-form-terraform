@@ -14,6 +14,11 @@ concurrency:
   group: terraform-apply-dev
   cancel-in-progress: false
 
+env:
+  TF_VAR_aws_region:         ${{ vars.TF_AWS_REGION }}
+  TF_VAR_notification_email: ${{ vars.TF_NOTIFICATION_EMAIL }}
+  TF_VAR_site_bucket_suffix: ${{ vars.TF_SITE_BUCKET_SUFFIX }}
+
 jobs:
   plan:
     if: github.event_name == 'pull_request'
@@ -31,7 +36,7 @@ jobs:
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
-          aws-region: us-east-1
+          aws-region: ${{ vars.TF_AWS_REGION }}
 
       - name: Terraform fmt
         run: terraform fmt -check -recursive
@@ -67,7 +72,7 @@ jobs:
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
-          aws-region: us-east-1
+          aws-region: ${{ vars.TF_AWS_REGION }}
 
       - name: Terraform init
         run: terraform init
