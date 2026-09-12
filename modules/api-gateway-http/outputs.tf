@@ -1,0 +1,8 @@
+output "invoke_url" {
+  description = "Base invoke URL"
+  value       = aws_apigatewayv2_stage.default.invoke_url
+}
+
+output "api_id" {
+  value = aws_apigatewayv2_api.this.id
+}
