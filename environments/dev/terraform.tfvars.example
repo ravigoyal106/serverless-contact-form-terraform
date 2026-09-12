@@ -2,3 +2,5 @@ aws_region   = "ap-south-1"
 project_name = "serverless-contact-form"
 notification_email = "ravigoyal106@gmail.com"
 site_bucket_suffix = "ravigoyal106"
+project_name = "serverless-contact-form"
+
