@@ -60,8 +60,11 @@ module "api_gateway" {
 module "frontend_site" {
   source = "../../modules/s3-static-site"
 
-  bucket_name    = "${var.project_name}-site-dev-${var.site_bucket_suffix}"
-  api_invoke_url = "${module.api_gateway.invoke_url}/contact"
+  bucket_name = "${var.project_name}-site-dev-${var.site_bucket_suffix}"
+
+  index_html_content = templatefile("${path.module}/../../frontend/index.html.tftpl", {
+    api_url = "${module.api_gateway.invoke_url}/contact"
+  })
 
   tags = { Environment = "dev" }
 }
