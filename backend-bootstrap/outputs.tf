@@ -7,3 +7,7 @@ output "state_bucket_arn" {
   description = "ARN of the state bucket"
   value       = aws_s3_bucket.terraform_state.arn
 }
+
+output "github_actions_role_arn" {
+  value = aws_iam_role.github_actions_deploy.arn
+}

@@ -16,3 +16,8 @@ variable "state_bucket_suffix" {
   default     = "ravigoyal106"
 
 }
+
+variable "github_repo" {
+  description = "In the form owner/repo-name, scopes exactly who can assume this role."
+  type        = string
+}
