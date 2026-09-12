@@ -28,3 +28,4 @@ terraform.rc
 # OS/editor cruft
 .DS_Store
 *.swp
+log.txt

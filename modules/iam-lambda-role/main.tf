@@ -1,27 +1,27 @@
 data "aws_iam_policy_document" "lambda_assume_role" {
-    statement {
-      effect = "Allow"
-      actions = ["sts:AssumeRole"]
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
 
-      principals {
-        type = "Service"
-        identifiers = ["lambda.amazonaws.com"]
-      }
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
     }
-  
+  }
+
 }
 
 resource "aws_iam_role" "lambda_execution" {
-    name = var.role_name
-    assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
-    tags = var.tags
+  name               = var.role_name
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
+  tags               = var.tags
 
-  
+
 }
 
 resource "aws_iam_role_policy_attachment" "basic_execution" {
-role = aws_iam_role.lambda_execution.name
-policy_arn  =   "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role       = aws_iam_role.lambda_execution.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 data "aws_iam_policy_document" "contact_form_permissions" {
