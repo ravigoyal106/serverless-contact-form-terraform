@@ -9,3 +9,14 @@ variable "project_name" {
   type        = string
   default     = "serverless-contact-form"
 }
+
+variable "notification_email" {
+  description = "Receives contact-form notifications and sends them. Must be verified in SES."
+  type        = string
+}
+
+
+variable "site_bucket_suffix" {
+  description = "Unique suffix for the frontend bucket — same idea as the state bucket's suffix in Step 1."
+  type        = string
+}
