@@ -24,11 +24,14 @@ data "aws_iam_policy_document" "github_actions_assume" {
       values   = ["sts.amazonaws.com"]
     }
 
-    condition {
-      test     = "StringLike"
-      variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repo}:*"]
-    }
+condition {
+  test     = "StringLike"
+  variable = "token.actions.githubusercontent.com:sub"
+  values = [
+    "repo:${var.github_repo}:*",
+    "repo:${split("/", var.github_repo)[0]}@*/${split("/", var.github_repo)[1]}@*:*"
+  ]
+}
   }
 }
 
@@ -82,8 +85,7 @@ data "aws_iam_policy_document" "github_actions_deploy" {
     resources = ["arn:aws:sns:*:*:${var.project_name}-*"]
   }
 
-  # apigatewayv2 and SES don't expose clean pre-creation resource ARNs to
-  # scope by name — an accepted, documented exception (ADR 0006).
+
   statement {
     sid       = "ApiGatewayBroaderByNecessity"
     effect    = "Allow"
