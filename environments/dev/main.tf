@@ -73,4 +73,5 @@ module "observability" {
 
   lambda_function_name = module.contact_form_lambda.function_name
   alarm_email           = var.notification_email
+  log_retention_days = 90
 }

@@ -17,6 +17,6 @@ variable "notification_email" {
 
 
 variable "site_bucket_suffix" {
-  description = "Unique suffix for the frontend bucket — same idea as the state bucket's suffix in Step 1."
+  description = "Unique suffix for the frontend bucket."
   type        = string
 }
