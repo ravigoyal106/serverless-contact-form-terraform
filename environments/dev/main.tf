@@ -72,5 +72,5 @@ module "observability" {
   source = "../../modules/observability"
 
   lambda_function_name = module.contact_form_lambda.function_name
-  alarm_email           = var.notification_email
+  alarm_email          = var.notification_email
 }
