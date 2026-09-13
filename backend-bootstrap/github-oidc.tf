@@ -42,15 +42,9 @@ resource "aws_iam_role" "github_actions_deploy" {
 
 data "aws_iam_policy_document" "github_actions_deploy" {
   statement {
-    sid    = "S3ProjectResourcesOnly"
-    effect = "Allow"
-    actions = [
-      "s3:CreateBucket", "s3:DeleteBucket", "s3:GetObject", "s3:PutObject",
-      "s3:DeleteObject", "s3:ListBucket", "s3:PutBucketPolicy", "s3:GetBucketPolicy",
-      "s3:PutBucketVersioning", "s3:GetBucketVersioning", "s3:PutEncryptionConfiguration",
-      "s3:GetEncryptionConfiguration", "s3:PutBucketPublicAccessBlock",
-      "s3:GetBucketPublicAccessBlock", "s3:PutBucketWebsite", "s3:GetBucketWebsite"
-    ]
+    sid       = "S3ProjectResourcesOnly"
+    effect    = "Allow"
+    actions   = ["s3:*"]
     resources = [
       "arn:aws:s3:::${var.project_name}-*",
       "arn:aws:s3:::${var.project_name}-*/*"
@@ -60,50 +54,49 @@ data "aws_iam_policy_document" "github_actions_deploy" {
   statement {
     sid       = "DynamoDBProjectTableOnly"
     effect    = "Allow"
-    actions   = ["dynamodb:CreateTable", "dynamodb:DeleteTable", "dynamodb:DescribeTable", "dynamodb:UpdateTable", "dynamodb:TagResource"]
+    actions   = ["dynamodb:*"]
     resources = ["arn:aws:dynamodb:*:*:table/${var.project_name}-*"]
   }
 
   statement {
     sid       = "LambdaProjectFunctionOnly"
     effect    = "Allow"
-    actions   = ["lambda:CreateFunction", "lambda:DeleteFunction", "lambda:GetFunction", "lambda:UpdateFunctionCode", "lambda:UpdateFunctionConfiguration", "lambda:AddPermission", "lambda:RemovePermission", "lambda:GetPolicy", "lambda:TagResource"]
+    actions   = ["lambda:*"]
     resources = ["arn:aws:lambda:*:*:function:${var.project_name}-*"]
   }
 
   statement {
     sid       = "IAMProjectRoleOnly"
     effect    = "Allow"
-    actions   = ["iam:GetRole", "iam:CreateRole", "iam:DeleteRole", "iam:TagRole", "iam:PutRolePolicy", "iam:DeleteRolePolicy", "iam:GetRolePolicy", "iam:AttachRolePolicy", "iam:DetachRolePolicy", "iam:ListRolePolicies", "iam:ListAttachedRolePolicies", "iam:PassRole"]
+    actions   = ["iam:*"]
     resources = ["arn:aws:iam::*:role/${var.project_name}-*"]
   }
 
   statement {
     sid       = "SNSProjectTopicOnly"
     effect    = "Allow"
-    actions   = ["sns:CreateTopic", "sns:DeleteTopic", "sns:Subscribe", "sns:GetTopicAttributes", "sns:SetTopicAttributes"]
+    actions   = ["sns:*"]
     resources = ["arn:aws:sns:*:*:${var.project_name}-*"]
   }
-
 
   statement {
     sid       = "ApiGatewayBroaderByNecessity"
     effect    = "Allow"
     actions   = ["apigateway:*"]
-    resources = ["arn:aws:apigateway:*::/apis", "arn:aws:apigateway:*::/apis/*"]
+    resources = ["arn:aws:apigateway:*::/*"]
   }
 
   statement {
     sid       = "SESBroaderByNecessity"
     effect    = "Allow"
-    actions   = ["ses:VerifyEmailIdentity", "ses:DeleteIdentity", "ses:GetIdentityVerificationAttributes"]
+    actions   = ["ses:*"]
     resources = ["*"]
   }
 
   statement {
     sid       = "CloudWatchLogsAndAlarms"
     effect    = "Allow"
-    actions   = ["logs:CreateLogGroup", "logs:DeleteLogGroup", "logs:PutRetentionPolicy", "logs:DescribeLogGroups", "cloudwatch:PutMetricAlarm", "cloudwatch:DeleteAlarms", "cloudwatch:DescribeAlarms"]
+    actions   = ["logs:*", "cloudwatch:*"]
     resources = ["*"]
   }
 }
