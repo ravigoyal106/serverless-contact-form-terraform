@@ -11,12 +11,9 @@ resource "aws_s3_bucket_website_configuration" "this" {
   }
 }
 
-# This requires Block Public Access OFF at both bucket AND account level.
-# If this errors with "BlockPublicPolicy", that's the account-level
-
 resource "aws_s3_bucket_public_access_block" "this" {
   bucket = aws_s3_bucket.this.id
-
+  #tfsec:ignore:aws-s3-no-public-buckets Intentional dev static site hosting,
   block_public_acls       = false
   block_public_policy     = false
   ignore_public_acls      = false
@@ -40,9 +37,6 @@ data "aws_iam_policy_document" "public_read" {
 resource "aws_s3_bucket_policy" "public_read" {
   bucket = aws_s3_bucket.this.id
   policy = data.aws_iam_policy_document.public_read.json
-
-  # Explicit ordering: make sure Block Public Access is resolved
-  # before Terraform tries to attach a policy that grants public access.
   depends_on = [aws_s3_bucket_public_access_block.this]
 }
 

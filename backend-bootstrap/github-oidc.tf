@@ -36,6 +36,7 @@ condition {
 }
 
 resource "aws_iam_role" "github_actions_deploy" {
+  #tfsec:ignore:aws-iam-no-policy-wildcards Actions scoped broadly on purpose within a tight resource ARN prefix
   name               = "${var.project_name}-github-actions-deploy"
   assume_role_policy = data.aws_iam_policy_document.github_actions_assume.json
 }
